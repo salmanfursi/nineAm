@@ -12,61 +12,35 @@ const ShopPage = ({ shopName }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // const verifyAuth = async () => {
-        //     try {
-        //         // Get token from cookies or localStorage
-        //         const token = getCookie('token') || localStorage.getItem('authToken');
-        //         console.log('Token found:', token ? 'YES' : 'NO');
-
-        //         const headers = {
-        //             'Content-Type': 'application/json',
-        //         };
-
-        //         // Add Authorization header if token exists
-        //         if (token) {
-        //             headers['Authorization'] = `Bearer ${token}`;
-        //         }
-
-        //         const response = await fetch(`http://localhost:5000/api/shop/${shopName}`, {
-        //             method: 'GET',
-        //             credentials: 'include', // Still try cookies
-        //             headers
-        //         });
-
-        //         console.log('Auth response status:', response.status);
-
-        //         if (response.ok) {
-        //             setAuthenticated(true);
-        //             setError(null);
-        //         } else {
-        //             setAuthenticated(false);
-        //             const errorData = await response.json().catch(() => ({}));
-        //             setError(errorData.message || 'Authentication failed');
-        //         }
-        //     } catch (err) {
-        //         console.error('Auth verification error:', err);
-        //         setAuthenticated(false);
-        //         setError('Network error occurred');
-        //     } finally {
-        //         setLoading(false);
-        //     }
-        // };
         const verifyAuth = async () => {
             try {
+                // Get token from cookies or localStorage
+                const token = getCookie('token') || localStorage.getItem('authToken');
+                console.log('Token found:', token ? 'YES' : 'NO');
+
+                const headers = {
+                    'Content-Type': 'application/json',
+                };
+
+                // Add Authorization header if token exists
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                }
+
                 const response = await fetch(`http://localhost:5000/api/shop/${shopName}`, {
                     method: 'GET',
-                    credentials: 'include', // Important!
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                    credentials: 'include', // Still try cookies
+                    headers
                 });
+
+                console.log('Auth response status for token cockie:', response);
 
                 if (response.ok) {
                     setAuthenticated(true);
                     setError(null);
                 } else {
                     setAuthenticated(false);
-                    const errorData = await response.json();
+                    const errorData = await response.json().catch(() => ({}));
                     setError(errorData.message || 'Authentication failed');
                 }
             } catch (err) {
@@ -76,7 +50,8 @@ const ShopPage = ({ shopName }) => {
             } finally {
                 setLoading(false);
             }
-          };
+        };
+
         verifyAuth();
     }, [shopName]);
 
