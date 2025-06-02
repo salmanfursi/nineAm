@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
  
-const API_BASE = 'http://localhost:5000';
+// const API_BASE = 'http://localhost:5000';
+
+const API_BASE = 'https://nineam-server-5zy3lp98m-salmanfursis-projects.vercel.app';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {

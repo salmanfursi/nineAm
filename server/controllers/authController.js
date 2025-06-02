@@ -69,22 +69,15 @@ exports.signup = async (req, res) => {
       { expiresIn: "30m" }
     );
     const maxAge = 30 * 60 * 1000; // 30 minutes
-    // In your signin/signup controller, when setting the cookie:
-    // In both signin and signup functions, update the cookie settings:
-    // res.cookie("token", token, {
-    //   httpOnly: true,
-    //   secure: false, // Set to true in production
-    //   sameSite: "lax",
-    //   domain: ".localhost", // Note the dot prefix
-    //   maxAge: maxAge,
-    // });
+     
     console.log("token----------||", token);
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: true, // ✅ REQUIRED when using SameSite=None
       sameSite: "none", // ✅ Enables cross-subdomain cookies
-      domain: "localhost", // ✅ Allows subdomain access like shopname.localhost
+      // domain: "localhost", // ✅ Allows subdomain access like shopname.localhost
+      domain: process.env.COOKIE_DOMAIN || "localhost",
       maxAge: maxAge,
     });
     
@@ -122,21 +115,14 @@ exports.signin = async (req, res) => {
       process.env.JWT_SECRET || "fallback-secret-key",
       { expiresIn }
     );
-    // In your signin/signup controller, when setting the cookie:
-    // In both signin and signup functions, update the cookie settings:
-    // res.cookie("token", token, {
-    //   httpOnly: true,
-    //   secure: false, // Set to true in production
-    //   sameSite: "lax",
-    //   domain: ".localhost", // Note the dot prefix
-    //   maxAge: maxAge,
-    // });
+     
     console.log('token----------||',token)
     res.cookie("token", token, {
       httpOnly: true,
       secure: true, // ✅ REQUIRED when using SameSite=None
       sameSite: "none", // ✅ Enables cross-subdomain cookies
-      domain: "localhost", // ✅ Allows subdomain access like shopname.localhost
+      // domain: "localhost", // ✅ Allows subdomain access like shopname.localhost
+      domain: process.env.COOKIE_DOMAIN || "localhost",
       maxAge: maxAge,
     });
     
@@ -170,34 +156,7 @@ exports.logout = (req, res) => {
   res.clearCookie("token");
   res.json({ message: "Logged out successfully" });
 };
-
-// exports.authenticateToken = async (req, res, next) => {
-//   console.log("1Shop route accessed for:", req.params.shopname); // Changed from shopName to shopname
-//   console.log("2Cookies received:", req.cookies);
-//   console.log("3Cookies token:", req.cookies.token);
-//   console.log("4Headers received:", req.headers.cookie);
-//   try {
-//     const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
-//     if (!token) {
-//       return res.status(401).json({ message: "Access token required" });
-//     }
-//     const decoded = jwt.verify(
-//       token,
-//       process.env.JWT_SECRET
-//     );
-//     const user = await User.findById(decoded.userId).select("-password");
-//     if (!user) {
-//       return res.status(401).json({ message: "User not found" });
-//     }
-//     req.user = user;
-//     next();
-//   } catch (error) {
-//     res.status(401).json({ message: "Invalid token" });
-//   }
-// };
-
-
-
+  
 exports.authenticateToken = async (req, res, next) => {
     console.log("1Shop route accessed for:", req.params.shopname); // Changed from shopName to shopname
     console.log("2Cookies received:", req.cookies);
