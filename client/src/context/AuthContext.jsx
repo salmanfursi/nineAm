@@ -1,17 +1,17 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
- 
-// const API_BASE = 'http://localhost:5000';
 
-const API_BASE = 'https://nineam-server-5zy3lp98m-salmanfursis-projects.vercel.app';
-const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-
-    const checkAuth = async () => {
+const API_BASE = import.meta.env.VITE_SERVER
+const VITE_BASE = import.meta.env.VITE_CLIENT;
+console.log('api base', API_BASE, 'vite base', VITE_BASE)
+  const AuthContext = createContext();
+  export const AuthProvider = ({ children }) => {
+      const [user, setUser] = useState(null);
+      const [loading, setLoading] = useState(true);
+      const [error, setError] = useState('');
+      
+      const checkAuth = async () => {
         try {
             const response = await fetch(`${API_BASE}/api/auth/profile`, { credentials: 'include' });
             if (response.ok) {
@@ -28,6 +28,8 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => { checkAuth(); }, []);
 
     const signup = async (userData) => {
+        console.log('dsfhaksdfiuashf asdf', API_BASE)
+
         setLoading(true);
         setError('');
         try {
@@ -93,7 +95,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{
-            user, loading, error, signup, signin, logout, checkAuth, setError
+            user, loading, error, signup, signin, logout, checkAuth, setError, API_BASE, VITE_BASE
         }}>
             {children}
         </AuthContext.Provider>
@@ -103,4 +105,3 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => useContext(AuthContext);
 
 
- 

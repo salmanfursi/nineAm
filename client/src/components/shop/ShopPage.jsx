@@ -6,7 +6,7 @@ import Button from "../Button";
 import LoadingSpinner from "../LoadingSpinner";
 
 const ShopPage = ({ shopName }) => {
-    const { checkAuth } = useAuth();
+    const { checkAuth, API_BASE } = useAuth();
     const [loading, setLoading] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
     const [error, setError] = useState(null);
@@ -27,7 +27,7 @@ const ShopPage = ({ shopName }) => {
                     headers['Authorization'] = `Bearer ${token}`;
                 }
 
-                const response = await fetch(`http://localhost:5000/api/shop/${shopName}`, {
+                const response = await fetch(`${API_BASE}/api/shop/${shopName}`, {
                     method: 'GET',
                     credentials: 'include', // Still try cookies
                     headers

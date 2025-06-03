@@ -5,16 +5,16 @@ import { LogOut, User } from "lucide-react";
 import Modal from "../Modal";
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
+  const { user, logout,VITE_BASE } = useAuth();
   const [showProfile, setShowProfile] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const handleShopClick = (shopName) => {
     // window.open(`http://${shopName}.localhost:5173`);
-    window.location.href = `http://${shopName}.localhost:5173`;
+    window.location.href = `http://${shopName}${VITE_BASE}`;
 
   };
-
+  // VITE_API_BASE
   const handleLogout = async () => {
     await logout();
     setShowLogoutModal(false);
@@ -88,7 +88,7 @@ const Dashboard = () => {
               <h3 className="text-lg font-semibold mb-2">{shop}</h3>
               <p className="text-gray-600 text-sm mb-4">Click to access shop dashboard</p>
               <div className="text-blue-500 text-sm font-medium">
-                {shop}.localhost:5173 →
+                {shop} →
               </div>
             </div>
           ))}

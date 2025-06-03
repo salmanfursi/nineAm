@@ -28,17 +28,42 @@ const App = () => {
   }, [user]);
 
   // Handle hash changes
+  // useEffect(() => {
+  //   const handleHashChange = () => {
+  //     const hash = window.location.hash.slice(1);
+  //     if (hash && window.location.hostname === 'localhost') {
+  //       setCurrentPage(hash);
+  //     }
+  //   };
+
+  //   window.addEventListener('hashchange', handleHashChange);
+  //   return () => window.removeEventListener('hashchange', handleHashChange);
+  // }, []);
+
+
+  // In your main App component
+
   useEffect(() => {
+    // Function to update page based on hash
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1);
-      if (hash && window.location.hostname === 'localhost') {
+      if (hash) {
         setCurrentPage(hash);
       }
     };
 
+    // Listen for hash changes
     window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+
+    // Also handle initial load with hash
+    handleHashChange();
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
+
+  
 
   if (loading) {
     return <LoadingSpinner />;

@@ -13,18 +13,42 @@ const shopRoutes = require("./routes/shopRoutes");
 // Middleware
 app.use(express.json());
 
+// app.use(
+//   cors({
+//     origin: function (origin, callback) {
+//       if (!origin || origin.match(/^http:\/\/(.*\.)?localhost(:\d+)?$/)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || origin.match(/^http:\/\/(.*\.)?localhost(:\d+)?$/)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+      if (!origin) return callback(null, true); // ✅ Allow Postman/cURL
+
+      // ✅ In production: allow all origins (Netlify, subdomains, etc.)
+      if (process.env.NODE_ENV === "production") {
+        return callback(null, true);
       }
+
+      // ✅ In dev: allow only localhost
+      if (origin.match(/^http:\/\/(.*\.)?localhost(:\d+)?$/)) {
+        return callback(null, true);
+      }
+
+      // ❌ Block everything else
+      callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
   })
 );
+
+
 
 
 

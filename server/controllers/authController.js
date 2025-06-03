@@ -116,7 +116,7 @@ exports.signin = async (req, res) => {
       { expiresIn }
     );
      
-    console.log('token----------||',token)
+    // console.log('token----------||',token)
     res.cookie("token", token, {
       httpOnly: true,
       secure: true, // ✅ REQUIRED when using SameSite=None
