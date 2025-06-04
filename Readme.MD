@@ -63,16 +63,27 @@ for test the backend:https://api.replicate-test.com/api/test
 * I borrowed a domain from a friend (`replicate-test.com`) and used **Cloudflare** to manage DNS
 
 ### 🔄 Hosting Setup Attempt
+✅ Backend was deployed on Vercel with a custom domain managed via Cloudflare
 
-* Backend on Vercel with custom domain setup via Cloudflare
-* Frontend deployed to Railway (supports custom domains)
-* **BUT:**
+✅ Frontend was deployed on Railway, which supports custom domains
 
-  * Cookie-based cross-subdomain auth **did not work** in production
-  * Vercel backend had issues issuing cookies with `SameSite=None` over custom domain
-  * Even after using ping/keep-alive routes, random 500 errors occurred
+❌ Issues Faced:
 
----
+Cookie-based cross-subdomain authentication did not work in production
+
+Vercel backend had trouble issuing cookies with SameSite=None over custom domains
+
+Even after adding keep-alive (/ping) routes, random 500 errors occurred
+
+Due to time pressure, I couldn’t fully update the frontend with the final backend URL, which likely caused request failures or cookie mismatches
+
+As a result, some requests weren’t routed properly to the authenticated backend session
+
+🛠️ Additional Context:
+
+This was my first time working with so many hosting platforms (Vercel, Railway, Netlify, Surge, Render, etc.)
+
+I experimented a lot within a short period — and while I learned a lot, this rapid exploration also caused some delays and setup mistakes---
 
 ## 🚧 Why I Couldn't Fully Submit Production URL
 
@@ -91,6 +102,7 @@ Due to these issues:
 * Free hosting platforms are limited for **multi-tenant architecture**
 * Cloudflare can handle wildcard subdomains but requires backend and frontend to be perfectly aligned
 * Railway can be used for frontend, but cookie issues from separate domain backends must be solved
+* render and amplify can solve but not free these are paid !
 
 ---
 
@@ -106,4 +118,7 @@ Although I couldn’t host the full setup in production due to platform and doma
 
 > I'm confident that with a proper paid domain and Pro plan hosting, the project would work 100% in production.
 
-Thank you for the opportunity!
+Despite that, I learned a lot from this assignment — including advanced deployment flow, domain management, and multi-tenant authentication architecture.
+🙏 Thank you for the opportunity — I truly learned a lot from this assignment!
+
+ 
