@@ -64,6 +64,17 @@ mongoose
 app.get("/api/test", (req, res) => {
   res.json({ message: "Backend is working!" });
 });
+// UptimeRobot ping route
+app.get("/api/ping", (req, res) => {
+  console.log('sdfakjsfds')
+  res
+    .status(200)
+    .json({
+      status: "ok",
+      timestamp: Date.now(),
+      message: "Backend is ping!",
+    });
+});
 
 // Use routes
 app.use("/api/auth", authRoutes);
