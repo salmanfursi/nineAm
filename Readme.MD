@@ -27,6 +27,7 @@ I successfully built the full MERN stack application **locally** with all requir
 ---
 
 ## 🧠 API Features Overview
+for test the backend:https://api.replicate-test.com/api/test
 
 ### 🔐 Authentication Routes (`/api/auth/...`)
 
